@@ -26,7 +26,7 @@ public class AnimatorManger {
     private View targetView;
     public static final String jsonString = " {\n" +
             "        \"img\": \"someimg.png\",\n" +
-            "        \"position\": [50,50],\n" +
+            "        \"position\": [20,20],\n" +
             "        \"actions\": [\n" +
             "\n" +
             "             {\n" +
@@ -34,7 +34,7 @@ public class AnimatorManger {
             "\t        \"delay\" : 1000,\n" +
             "\t        \"duration\" : 1000,\n" +
             "\t        \"relative\" : \"by\",\n" +
-            "\t        \"position\" : [300,300]\n" +
+            "\t        \"position\" : [100,100]\n" +
             "              },\n" +
             "             {\n" +
             "                \"actionType\": \"scale\",\n" +
@@ -72,8 +72,8 @@ public class AnimatorManger {
                 return;
             }
 
-            position[0] = animatorType.getPosition().get(0);
-            position[1] = animatorType.getPosition().get(1);
+            position[0] = DimensionUtil.dipToPx(context,animatorType.getPosition().get(0));
+            position[1] = DimensionUtil.dipToPx(context,animatorType.getPosition().get(1));
 
             animatorSet = new AnimatorSet();
             targetView.setX(position[0]);

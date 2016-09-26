@@ -15,6 +15,7 @@ public class AnimatorFactory {
     private static final String MOVE = "move";
     private static final String SCALE = "scale";
     private static final String ROTATE = "rotate";
+    private static final String ALPHA = "alpha";
     private static final String TO = "to";
     public static Animator generateAnimator(AnimatorType.ActionsEntity actionEntity,View target) {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -31,6 +32,8 @@ public class AnimatorFactory {
 
 
         if(MOVE.equals(property)) {
+            position[0] = DimensionUtil.dipToPx(target.getContext(),position[0]);
+            position[1] = DimensionUtil.dipToPx(target.getContext(),position[1]);
             ObjectAnimator xAnimator = ObjectAnimator.ofFloat(target,TO.equals(relative)?"x":"translationX",position[0]);
             ObjectAnimator yAnimator = ObjectAnimator.ofFloat(target,TO.equals(relative)?"y":"translationY",position[1]);
             animatorSet.playTogether(xAnimator,yAnimator);
@@ -53,6 +56,15 @@ public class AnimatorFactory {
 
             rotateAnimator = ObjectAnimator.ofFloat(target, "rotation",
                     (TO.equals(relative)?0.0f:target.getRotation())+position[0]);
+
+            animatorSet.playTogether(rotateAnimator);
+            decorateAnimator(animatorSet,duration,startDelay);
+
+        }else if(ALPHA.equals(property)) {
+            ObjectAnimator rotateAnimator;
+
+            rotateAnimator = ObjectAnimator.ofFloat(target, "alpha",
+                    (TO.equals(relative)?0.0f:target.getAlpha())*position[0]);
 
             animatorSet.playTogether(rotateAnimator);
             decorateAnimator(animatorSet,duration,startDelay);
